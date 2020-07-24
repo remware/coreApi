@@ -1,4 +1,4 @@
-using System;
+using Microsoft.AspNetCore.Mvc;
 using Xunit;
 
 namespace Api.Tests
@@ -14,8 +14,9 @@ namespace Api.Tests
         [Fact]
         public void GetTemplateShould_ReturnOkResult()
         {
-            var result = _identityController.GetTemplate();
-            Assert.NotNull(result);
+            IActionResult result = _identityController.GetTemplate();
+            var fileResult = Assert.IsType<PhysicalFileResult>(result);
+            Assert.Equal("text/csv", fileResult.ContentType);
         }
     }
 }
